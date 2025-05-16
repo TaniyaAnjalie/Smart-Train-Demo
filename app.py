@@ -11,11 +11,14 @@ def update_location():
     lat = data.get('lat')
     lon = data.get('lon')
 
-    # Your logic to validate whether lat/lon is on railway line
-    print(f"Received: lat={lat}, lon={lon}")
+    print(f"Received location: {lat}, {lon}")
 
-    # For demo, always accept
-    return jsonify({"status": "success", "message": "Location received"}), 200
+    # Example: reject if outside bounds (simulate off-rail logic)
+    if not (5.0 < lat < 10.0 and 79.0 < lon < 82.0):  # approx Sri Lanka bounds
+        return jsonify({'message': 'Location rejected – outside rail area'}), 400
+
+    return jsonify({'message': 'Location updated successfully'}), 200
 
 if __name__ == '__main__':
     app.run(port=5000)
+
