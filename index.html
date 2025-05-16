@@ -1,4 +1,3 @@
-<!-- frontend/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,12 +7,15 @@
 <body>
   <h1>Smart Train Assistant Demo</h1>
   <button onclick="sendLocation()">Send My Location</button>
-  <p id="status"></p>
+  <p id="status">Waiting...</p>
 
   <script>
     async function sendLocation() {
+      const statusEl = document.getElementById("status");
+      statusEl.innerText = "Getting location...";
+
       if (!navigator.geolocation) {
-        document.getElementById("status").innerText = "Geolocation not supported.";
+        statusEl.innerText = "Geolocation not supported.";
         return;
       }
 
@@ -21,14 +23,29 @@
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
 
-        const response = await fetch("https://great-peas-smoke.loca.lt/update_location", {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ lat, lon })
-        });
+        statusEl.innerText = `Sending location: ${lat.toFixed(4)}, ${lon.toFixed(4)}...`;
 
-        const result = await response.json();
-        document.getElementById("status").innerText = `${result.status}: ${result.message}`;
+        try {
+          const response = await fetch("https://fluffy-cities-add.loca.lt/update_location", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ lat, lon })
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            statusEl.innerText = `✅ ${result.message}`;
+          } else {
+            statusEl.innerText = `❌ ${result.message}`;
+          }
+
+        } catch (error) {
+          console.error("Request failed:", error);
+          statusEl.innerText = "🚫 Network error or backend not reachable.";
+        }
+      }, (err) => {
+        statusEl.innerText = `Geolocation error: ${err.message}`;
       });
     }
   </script>
