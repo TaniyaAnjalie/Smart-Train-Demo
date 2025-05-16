@@ -1,0 +1,36 @@
+<!-- frontend/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Train GPS Tracker</title>
+</head>
+<body>
+  <h1>Smart Train Assistant Demo</h1>
+  <button onclick="sendLocation()">Send My Location</button>
+  <p id="status"></p>
+
+  <script>
+    async function sendLocation() {
+      if (!navigator.geolocation) {
+        document.getElementById("status").innerText = "Geolocation not supported.";
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        const response = await fetch('https://abcdef123.ngrok.io/update_location', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ lat, lon })
+        });
+
+        const result = await response.json();
+        document.getElementById("status").innerText = `${result.status}: ${result.message}`;
+      });
+    }
+  </script>
+</body>
+</html>
