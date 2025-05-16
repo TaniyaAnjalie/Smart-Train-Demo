@@ -1,0 +1,14 @@
+Field,Label,Value
+created,Created,2024-01-23T21:58:00.210604
+description,Description,GeoJSON
+format,File Format,GeoJSON
+download_url,Download URL,https://s3.dualstack.us-east-1.amazonaws.com/production-raw-data-api/ISO3/LKA/railways/lines/hotosm_lka_railways_lines_geojson.zip
+id,Resource ID,0ca22854-5856-4dd2-a1ec-ce065a05fad6
+last_modified,Updated,2025-05-01T19:32:50.885083
+metadata_modified,Metadata Updated,2025-05-01T19:39:23.203908
+microdata,Microdata,False
+dataset_id,Dataset ID,9b354a4f-b715-4cbb-9137-ab5336b51b00
+resource_type,Resource Type,api
+name,Resource Name,hotosm_lka_railways_lines_geojson.zip
+mimetype,MIME Type,
+size,Size,156.5K
